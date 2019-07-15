@@ -1,0 +1,9 @@
+﻿
+.radio-button {
+    padding-left: 5px;
+    padding-bottom: 5px;
+}
+
+input[type="radio"] {
+    margin-right: 5px;
+}

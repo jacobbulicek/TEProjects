@@ -1,0 +1,248 @@
+﻿@model dynamic
+
+@{
+    ViewData["Title"] = "Detail";
+    string image = Model.Park.ParkCode + ".jpg";
+
+
+
+}
+
+<style>
+    body {
+        background-color: #edf6f8;
+    }
+
+    fullpage {
+        font-family: 'Leelawadee UI';
+    }
+
+    #welcome {
+        font-weight: 600;
+        font-size: xx-large;
+        text-align: center;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-areas: "pic pic quote quote" "pic pic info info" "pic pic info info";
+    }
+
+
+    .mainpic {
+        grid-area: pic;
+    }
+
+    .quote {
+        grid-area: quote;
+        font-style: italic;
+    }
+
+    .info {
+        grid-area: info;
+        font-size: larger;
+    }
+
+        .info dt {
+            text-align: left;
+            width: auto;
+        }
+
+        .info dd {
+            padding-left: 40px;
+        }
+
+
+    #description{
+        padding: 20px;
+        font-size:large;
+    }
+ 
+    .temps {
+        display: inline-block;
+    }
+
+    /*/////////weather///////*/
+    .Weather {
+        display: flex;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .days {
+        border-style: solid;
+        margin: 5px;
+        background-color: white;
+        max-width: 20%;
+    }
+
+    .Weather img {
+        height: 60%;
+        width: 60%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+
+
+
+    /*if (atsign)model.TempSettings == "C"*/
+
+
+</style>
+<fullpage>
+
+
+    <h4 id="welcome">Welcome to <i>Beautiful</i> @Model.Park.ParkName!</h4>
+
+    <hr />
+    <div class="grid-container">
+        <div class="mainpic"><img id="parkPic" src="~/images/parks/@image" /> </div>
+        <div class="quote">
+            <p> @Model.Park.InspirationalQuote</p>
+            <p id="source">- @Model.Park.InspirationalQuoteSource</p>
+
+        </div>
+        <div class="info">
+            <div class="parkinfo">
+                <dl class="dl-horizontal">
+
+                    <dt>
+                        State
+                    </dt>
+                    <dd>
+                        @Model.Park.State
+                    </dd>
+                    <dt>
+                        Acreage
+                    </dt>
+                    <dd>
+                        @Model.Park.Acreage
+                    </dd>
+                    <dt>
+                        Elevation (ft)
+                    </dt>
+                    <dd>
+                        @Model.Park.ElevationInFeet
+                    </dd>
+                    <dt>
+                        Miles of Trail
+                    </dt>
+                    <dd>
+                        @Model.Park.MilesOfTrail
+                    </dd>
+                    <dt>
+                        Campsites
+                    </dt>
+                    <dd>
+                        @Model.Park.NumberOfCampsites
+                    </dd>
+                    <dt>
+                        Climate
+                    </dt>
+                    <dd>
+                        @Model.Park.Climate
+                    </dd>
+                    <dt>
+                        Year Founded
+                    </dt>
+                    <dd>
+                        @Model.Park.YearFounded
+                    </dd>
+                    <dt>
+                        Annual Visitors
+                    </dt>
+                    <dd>
+                        @Model.Park.AnnualVisitorCount
+                    </dd>
+
+                    <dt>
+                        Entry Fee
+                    </dt>
+                    <dd>
+                        @Model.Park.EntryFee
+                    </dd>
+                    <dt>
+                        Number of Animal Species
+                    </dt>
+                    <dd>
+                        @Model.Park.NumberOfAnimalSpecies
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    <div id="description">
+        @Model.Park.ParkDescription
+    </div>
+
+
+
+
+    @*need to make 2 separate forms, can just be a button, that can contain the info and pass it to the action. think about hidden fields in the form. also think of passing the current park.*@
+
+    <div class="temps">
+        <form class="temps" asp-action="Temperature">
+            <input type="hidden" name="parkCode" value="@Model.Park.ParkCode">
+            <input type="hidden" name="tempSettings" value="F">
+            <input type="submit" value="Fahrenheit">
+        </form>
+        <form class="temps" asp-action="Temperature">
+            <input type="hidden" name="parkCode" value="@Model.Park.ParkCode">
+            <input type="hidden" name="tempSettings" value="C">
+            <input type="submit" value="Centigrade">
+        </form>
+    </div>
+    @*/////////////////////WEATHER BOX///////////////////////////*@
+
+
+
+    <div class="Weather">
+
+        <div class="days">
+            <div class="day">Today</div>
+            <div class="low">Low: @Model.Weather[0].Low  &nbsp;&nbsp;&nbsp;&nbsp;   High: @Model.Weather[0].High</div>
+
+            <div class="pic"><img src="~/images/weather/@Model.Weather[0].WeatherImage" /></div>
+            <div class="message">@Model.Weather[0].TempRecommendation @Model.Weather[0].WeatherReccomendation </div>
+        </div>
+        <div class="days">
+            <div class="day">Tomorrow</div>
+            <div class="low">Low: @Model.Weather[1].Low   &nbsp;&nbsp;  &nbsp;&nbsp; High: @Model.Weather[1].High</div>
+
+            <div class="pic"><img src="~/images/weather/@Model.Weather[1].WeatherImage" /></div>
+            <div class="message">@Model.Weather[1].TempRecommendation @Model.Weather[1].WeatherReccomendation </div>
+        </div>
+        <div class="days">
+            <div class="day">The Day After Tomorrow</div>
+            <div class="low">Low: @Model.Weather[2].Low &nbsp;&nbsp;&nbsp;&nbsp;   High: @Model.Weather[2].High</div>
+
+            <div class="pic"><img src="~/images/weather/@Model.Weather[2].WeatherImage" /></div>
+            <div class="message">@Model.Weather[2].TempRecommendation @Model.Weather[2].WeatherReccomendation </div>
+        </div>
+        <div class="days">
+            <div class="day">The Day After That</div>
+            <div class="low">Low: @Model.Weather[3].Low  &nbsp;&nbsp;&nbsp;&nbsp;  High: @Model.Weather[3].High</div>
+
+            <div class="pic"><img src="~/images/weather/@Model.Weather[3].WeatherImage" /></div>
+            <div class="message">@Model.Weather[3].TempRecommendation @Model.Weather[3].WeatherReccomendation </div>
+        </div>
+        <div class="days">
+            <div class="day">4 Days From Now</div>
+            <div class="low">
+                <div>Low: @Model.Weather[4].Low  &nbsp;&nbsp;&nbsp;&nbsp;  High: @Model.Weather[4].High</div>
+
+                <div class="pic"><img src="~/images/weather/@Model.Weather[4].WeatherImage" /></div>
+                <div class="message">@Model.Weather[4].TempRecommendation @Model.Weather[4].WeatherReccomendation </div>
+            </div>
+        </div>
+    </div>
+
+
+</fullpage>

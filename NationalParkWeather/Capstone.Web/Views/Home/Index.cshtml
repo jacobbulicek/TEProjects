@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Capstone.Web.DAL.Park>
+
+@{
+    ViewData["Title"] = "Index";
+
+    
+
+
+}
+
+
+<style>
+
+    body {
+        background-color: #edf6f8;
+    }
+</style>
+
+
+    <h2><strong>Welcome to our National Parks</strong></h2>
+
+    <table class="table">
+
+
+        @foreach (var item in Model)
+        {
+            string image = @item.ParkCode + ".jpg";
+
+            <tr>
+                <td>
+                    <a asp-action="Detail" asp-route-parkCode="@item.ParkCode">
+                        <img id="img" src="~/images/parks/@image" />
+                    </a>
+                </td>
+                <td>
+                    
+                        <p> @item.ParkName </p>
+                        <br />
+                        <p >@item.ParkDescription</p>
+                   
+                </td>
+
+
+            </tr>
+        }
+
+
+    </table>
+
+
+
+
+
